@@ -82,3 +82,13 @@ Uncomment the `test_stretch_times()` test in `test_robot.py`. Can you optimize y
 * *1*: 0-69
 * *2*: 70-89
 * *3*: 90+
+
+
+- Robot starts by holding None. Need to put this down somewhere and not pick it up till list is otherwise sorted
+    -assume that the best place to put it is at one end of the list, so that you can evaluate compare() and can_move() and light_on() to pick it up. 
+- while loops 
+    - while light is off - list is unsorted.
+    - while can_move_right: evaluate item, swap if item robot's holding is larger than item in list. If swap occurs, turn light on. Move right. 
+    - while can_move_left: turn light off, move left.
+    - if can move right is false, the light is off, and compare returns None, swap items and return the list. 
+

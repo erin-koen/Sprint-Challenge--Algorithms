@@ -1,3 +1,33 @@
+'''
+Understand
+----------
+- Goal is for the robot sort() method to return a list that's sorted from smallest value to largest from left to right. 
+
+- What if it's passed a list of lists or a list of dicts? hard to handle edge case if we can't access the list variables directly. Come back to this.
+
+** RULES **
+- no stored variables
+- no variables accessed directly (only through robot methods)
+- yes helper methods, as long as above rules are followed
+
+Plan
+----
+- Robot starts by holding None. Need to put this down somewhere and not pick it up till list is otherwise sorted
+    -assume that the best place to put it is at one end of the list, so that you can evaluate compare() and can_move() and light_on() to pick it up. 
+- while loops 
+    - while can_move_right: evaluate item, swap if item robot's holding is larger than item in list. If swap occurs, turn light on. Move right. 
+    - while can_move_left: turn light off, move left.
+    - if can move right is false, the light is off, and compare returns None, swap items and return the list. 
+
+
+Execute
+-------
+
+Evaluate
+--------
+
+
+'''
 class SortingRobot:
     def __init__(self, l):
         """
@@ -96,8 +126,41 @@ class SortingRobot:
         """
         Sort the robot's list.
         """
-        # Fill this out
-        pass
+        # get rid of the None in inventory
+        # send it to the end of the list
+        while self.can_move_right() and self.compare_item()==None:
+            self.move_right()
+        # dump the None
+        if not self.can_move_right() and self.compare_item()==None:
+            self.swap_item()
+        # Go back to the beginning.
+        while self.can_move_left():
+            self.move_left()
+
+        # use the light as a boolean for sorted, turn it on whenever you make a switch
+
+        while not self.light_is_on():
+            # optimistically turn light on, if no swaps this loop won't repeat
+            self.set_light_on()
+
+            while self.can_move_right():
+                # evaluate item, swap if item in inventory is less than the item in the list, turn the light off
+                if self.compare_item() < 0:
+                    self.swap_item()
+                    self.set_light_off()
+                # if the item in the list is None, it means you're at the end, break the loop                    
+                # if self.compare_item()==None:
+                #     break
+                # in all other cases (items are equal in value or smaller in list than in inventory) move right    
+                self.move_right()
+                
+            print('position: ', self._position, '\n list: ', self._list)
+
+
+
+        
+
+
 
 
 if __name__ == "__main__":
@@ -109,4 +172,4 @@ if __name__ == "__main__":
     robot = SortingRobot(l)
 
     robot.sort()
-    print(robot._list)
+    # print(robot._list)
